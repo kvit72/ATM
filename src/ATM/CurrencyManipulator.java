@@ -23,4 +23,12 @@ public class CurrencyManipulator {
             denominations.put(denomination, count);
         }
     }
+
+    public int getTotalAmount() {
+        int totalAmount = 0;
+        for (Integer denomination : denominations.keySet()) {
+            totalAmount += denomination * denominations.get(denomination);
+        }
+        return totalAmount;
+    }
 }
