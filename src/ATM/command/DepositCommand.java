@@ -1,13 +1,18 @@
 package ATM.command;
 
+import ATM.CashMachine;
 import ATM.ConsoleHelper;
 import ATM.CurrencyManipulator;
 import ATM.CurrencyManipulatorFactory;
 
+import java.util.ResourceBundle;
+
 public class DepositCommand implements Command {
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.deposit");
+
     @Override
     public void execute() {
-        ConsoleHelper.writeMessage("Depositing...");
+        ConsoleHelper.writeMessage(res.getString("before"));
         String currencyCode = ConsoleHelper.askCurrencyCode();
         CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
 
