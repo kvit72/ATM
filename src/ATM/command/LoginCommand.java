@@ -1,11 +1,13 @@
 package ATM.command;
 
+import ATM.CashMachine;
 import ATM.ConsoleHelper;
 import ATM.exception.InterruptOperationException;
 
+import java.util.ResourceBundle;
+
 public class LoginCommand implements Command {
-    private String validCreditCard = "123456789";
-    private String validPin = "1234";
+    private ResourceBundle validCreditCards = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.verifiedCards");
 
     @Override
     public void execute() throws InterruptOperationException {
@@ -20,7 +22,7 @@ public class LoginCommand implements Command {
                 ConsoleHelper.writeMessage("Please specify valid credit card number - 9 digits, pin code - 4 digits.");
             } else {
                 try {
-                    if (creditCardNumber.equals(validCreditCard) && pinStr.equals(validPin)) {
+                    if (validCreditCards.containsKey(creditCardNumber) && pinStr.equals(validCreditCards.getString(creditCardNumber))) {
                         ConsoleHelper.writeMessage(String.format("Credit card [%s] is verified successfully!", creditCardNumber));
                         break;
                     } else {
