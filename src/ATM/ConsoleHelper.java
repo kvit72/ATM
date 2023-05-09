@@ -30,10 +30,10 @@ public class ConsoleHelper {
 
     public static String askCurrencyCode() throws InterruptOperationException {
         while (true) {
-            ConsoleHelper.writeMessage("Please choose a currency code, for example USD");
+            ConsoleHelper.writeMessage(res.getString("choose.currency.code"));
             String currencyCode = ConsoleHelper.readString();
             if (currencyCode == null || currencyCode.trim().length() != 3) {
-                ConsoleHelper.writeMessage("Please specify valid data.");
+                ConsoleHelper.writeMessage(res.getString("invalid.data"));
                 continue;
             }
             return currencyCode.trim().toUpperCase();
@@ -74,5 +74,9 @@ public class ConsoleHelper {
                 ConsoleHelper.writeMessage(res.getString("invalid.data"));
             }
         }
+    }
+
+    public static void printExitMessage() {
+        ConsoleHelper.writeMessage(res.getString("the.end"));
     }
 }
