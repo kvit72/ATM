@@ -1,5 +1,6 @@
 package ATM.command;
 
+import ATM.CashMachine;
 import ATM.ConsoleHelper;
 import ATM.CurrencyManipulator;
 import ATM.CurrencyManipulatorFactory;
@@ -7,21 +8,23 @@ import ATM.exception.InterruptOperationException;
 import ATM.exception.NotEnoughMoneyException;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class WithdrawCommand implements Command {
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.withdraw");
     @Override
     public void execute() throws InterruptOperationException {
-        ConsoleHelper.writeMessage("Withdrawing...");
+        ConsoleHelper.writeMessage(res.getString("before"));
 
         String currencyCode = ConsoleHelper.askCurrencyCode();
         CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
 
         while (true) {
             try {
-                ConsoleHelper.writeMessage("Please specify integer amount for withdrawing.");
+                ConsoleHelper.writeMessage(res.getString("specify.amount"));
                 String s = ConsoleHelper.readString();
                 if (s == null) {
-                    ConsoleHelper.writeMessage("Please specify valid positive integer amount for withdrawing.");
+                    ConsoleHelper.writeMessage(res.getString("specify.not.empty.amount"));
                 } else {
                     try {
                         int amount = Integer.parseInt(s);
@@ -32,17 +35,17 @@ public class WithdrawCommand implements Command {
                                 ConsoleHelper.writeMessage("\t" + item + " - " + denominations.get(item));
                             }
 
-                            ConsoleHelper.writeMessage(String.format("%d %s was withdrawn successfully", amount, currencyCode));
+                            ConsoleHelper.writeMessage(String.format(res.getString("success.format"), amount, currencyCode));
                             break;
                         } else {
-                            ConsoleHelper.writeMessage("Not enough money on your account, please try again");
+                            ConsoleHelper.writeMessage(res.getString("not.enough.money"));
                         }
                     } catch (NumberFormatException e) {
-                        ConsoleHelper.writeMessage("Please specify valid positive integer amount for withdrawing.");
+                        ConsoleHelper.writeMessage(res.getString("specify.not.empty.amount"));
                     }
                 }
             } catch (NotEnoughMoneyException e) {
-                ConsoleHelper.writeMessage("Exact amount is not available");
+                ConsoleHelper.writeMessage(res.getString("exact.amount.not.available"));
             }
         }
     }
