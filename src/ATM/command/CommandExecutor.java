@@ -1,6 +1,7 @@
 package ATM.command;
 
 import ATM.Operation;
+import ATM.exception.InterruptOperationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class CommandExecutor {
 
     }
 
-    public static final void execute(Operation operation) {
+    public static final void execute(Operation operation) throws InterruptOperationException {
         allKnownCommandsMap.get(operation).execute();
     }
 }

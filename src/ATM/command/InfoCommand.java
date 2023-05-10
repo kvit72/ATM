@@ -8,10 +8,10 @@ import ATM.CurrencyManipulatorFactory;
 import java.util.ResourceBundle;
 
 public class InfoCommand implements Command {
-    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.info");
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "info");
     @Override
     public void execute() {
-        ConsoleHelper.writeMessage("Information:");
+        ConsoleHelper.writeMessage(res.getString("before"));
         boolean hasMoney = false;
         for (CurrencyManipulator manipulator : CurrencyManipulatorFactory.getAllCurrencyManipulators()) {
             if (manipulator.hasMoney()) {
@@ -21,7 +21,7 @@ public class InfoCommand implements Command {
         }
 
         if (!hasMoney) {
-            ConsoleHelper.writeMessage("No money available.");
+            ConsoleHelper.writeMessage(res.getString("no.money"));
         }
 
     }

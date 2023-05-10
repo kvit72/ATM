@@ -1,5 +1,7 @@
 package ATM.command;
 
+import ATM.exception.InterruptOperationException;
+
 interface Command {
-    void execute();
+    void execute() throws InterruptOperationException;
 }
